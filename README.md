@@ -1,5 +1,3 @@
 ## MDDN 242 Project 1: Time-based Media  
+My initial idea was to have a clock with three 'areas' (representiung hours, minutes and seconds) and a different living thing would be assigned to each of these areas. The living thing would have a lifespan or life cycle of some description that would correspond with the amount of time that it represented. For example; I have 3 kinds of bugs, one of the bugs has an average lifespan of a second so every second, one of these bugs would crawl onto the screen and die in the 'seconds' area. Another one of the bugs has an average lifespan of 1 minute so every minute, one of these bugs would fly over and die into the 'minutes' area and so on and so forth. This would create a pile of dead bugs in each area which you could then count to work out the time. However I am not so sure about this idea anymore because I cannot find any living thing that only lives for a second.
 
-### THIS IS YOUR README
-
-Update this file as you go along to record your progress.
