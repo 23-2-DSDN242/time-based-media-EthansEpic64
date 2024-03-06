@@ -5,3 +5,7 @@ My second idea as shown in 'sketch.jpg' and 'preview.jpg' uses cars as the inspi
 
 Maeda Clock:
 I chose to recreate clock 5 because i really liked the idea of mixing the sophisticated, "you have to learn how to read me in school", traditonal methods of telling the time and the blatant, no time wasted, digital method of telling the time. This clock can be read by everyone from the generation of people who think the only 'second hand' in life are the cheap labels at the recycle botique all the way to the oldies who have been gatekeeping how to tell the time with their fancy quartz watches with no numbers and a face the size of an M&M. I didnt make it a working clock because of poor time management and the fact that I needed to get a start on my own clock but I recreated it the best I could using nothing but rects, fill and the rotate function.
+
+7/3/24
+Ive made a start on my clock and ive managed to make the minutes and seconds guage. I struggled with how to make the needles on the guages move smoothly ratheer than ticking but it turns out that the answer was in clock barss the whole. my next mission is to put the numbers and lines on the guages and to make the rotation start at 0 and reset when it gets to 60.
+I also would like to put a backlight (in th form of a blue circle that get more transparent towards the outer edge) on the guages to model them after my 2007 honda civic because it looks cool.
