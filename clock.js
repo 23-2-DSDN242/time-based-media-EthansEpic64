@@ -11,6 +11,8 @@ function draw_clock(obj) {
   //        < 0 if no alarm is set
   //        = 0 if the alarm is currently going off
   //        > 0 --> the number of seconds until alarm should go off
+  textSize(10);
+  textAlign(CENTER, CENTER);
   let hours = obj.hours;
   let minutes = obj.minutes;
   let seconds = obj.seconds;
@@ -35,33 +37,58 @@ function draw_clock(obj) {
   ellipse(0,0,260,260)
   
   noStroke();
-  const squareColor = color(31, 15, 252,60);
-  //squareColor.setAlpha(128 + 128 * sin);
-  fill(squareColor);
-  ellipse(0, 0,200,200);
+  const gaugeblue = color(31, 15, 252,60);
+  fill(gaugeblue);
+  let sizeStep = 16;
+  let howManyCircles = 15;
+  for(let i = 0; i <howManyCircles; i++){
+    ellipse(0, 0, sizeStep*i);
+    ellipse(300,0, sizeStep*i-30);
+  }
+  fill(255);
+  text('RPM (x100)',300,90);
+  textSize(12);
+  text('Km/H', 0,108)
+
+  //let lines = 12;
+  //let lineangle = 360/lines;
+  //let linerad = width/2;
+
+  //for (angle=270;angle<630;angle+lineangle){
+  //  x = cos(radians(angle)) * linerad;
+   // y = sin(radians(angle)) * linerad;
+   // line(linerad, linerad, x+linerad, y+linerad);
+  //}
+
 
   //needle (seconds)
   push();
   noStroke();
   fill(225,0,0); //red
-  rotate(360/60*smoothrotatemin);
-  rect(5,-5,100,10);
+  rotate(225/60*smoothrotatemin+135);
+  rect(5,-5,90,8);
   pop();
 
   noStroke();
   fill(80);
-  ellipse(0,0,25,25)
+  ellipse(0,0,20,20)
+
+  //if (seconds = 0 || seconds = 59){
+   // rotate(225/1000*-millis+135);
+  //}
 
   translate(+300,0);
   push();
   noStroke();
   fill(255,0,0); //red
-  rotate(360/60*smoothrotatesec);
-  rect(4,-4,85,8);
+  rotate(113/500*millis+135);
+  rect(4,-4,75,6);
   pop();
 
   translate(-300,0);
   noStroke();
   fill(80);
-  ellipse(300,0,25,25);
+  ellipse(300,0,20,20);
+
+  //rotate(225/60*smoothrotatesec+135);
 }

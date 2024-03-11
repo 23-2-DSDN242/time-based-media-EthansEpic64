@@ -9,3 +9,8 @@ I chose to recreate clock 5 because i really liked the idea of mixing the sophis
 7/3/24
 Ive made a start on my clock and ive managed to make the minutes and seconds guage. I struggled with how to make the needles on the guages move smoothly ratheer than ticking but it turns out that the answer was in clock barss the whole. my next mission is to put the numbers and lines on the guages and to make the rotation start at 0 and reset when it gets to 60.
 I also would like to put a backlight (in th form of a blue circle that get more transparent towards the outer edge) on the guages to model them after my 2007 honda civic because it looks cool.
+
+11/3/24
+I finally figured out how to make the cool transparent backlight looking thing on my gauges, turns out all I had to do was copy the code in the lecture and it looks awesome. Ive been trying to find an easy way to draw many lines around the edge to transform my circles with spinning rectangles into actual gauges. I tried adapting a method that someone used on stack overflow using a for loop and many angle variables but it crashed my code and it wouldnt refresh after commenting out the code until I restarted the live server which I thought was interesting because I couldnt understand how the code didnt work. Im sure its some silly reason that my non-coder-person eyes arent trained to look for. In the mean time I will try and find a way to make the needle stop and go back to zero at a specific angle.
+
+I got the needle to only move within a certain angle rather than going completely around, all I had to do was change 'rotate(360/60*smoothrotatemin)' to: 'rotate(225/60*smoothrotatemin+135);;
