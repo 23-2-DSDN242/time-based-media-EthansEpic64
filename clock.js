@@ -48,47 +48,75 @@ function draw_clock(obj) {
   fill(255);
   text('RPM (x100)',300,90);
   textSize(12);
-  text('Km/H', 0,108)
+  text('Km/H', 0,108);
 
-  //let lines = 12;
-  //let lineangle = 360/lines;
-  //let linerad = width/2;
+  push();
+  rotate(360-222)
+  let howManyLines = 60;
+  for(let b = 0; b <howManyLines; b++){
+   rotate(225/60);
+   rect(111,0,10,2);
+  };
+  pop();
 
-  //for (angle=270;angle<630;angle+lineangle){
-  //  x = cos(radians(angle)) * linerad;
-   // y = sin(radians(angle)) * linerad;
-   // line(linerad, linerad, x+linerad, y+linerad);
-  //}
+  push();
+  rotate(360-222)
+  let howManybigLines = 12;
+  for(let b2 = 0; b2 <howManybigLines; b2++){
+   rotate(225/12);
+   rect(107,0,15,3);
+  };
+  pop();
 
+  push();
+  translate(+300,0);
+  rotate(360-222)
+  let howManyLines2 = 60;
+  for(let c = 0; c <howManyLines2; c++){
+   rotate(225/60);
+   rect(100,0,8,2);
+  };
+  pop();
 
-  //needle (seconds)
+  push();
+  translate(+300,0);
+  rotate(360-222)
+  let howManybigLines2 = 12;
+  for(let c2 = 0; c2 <howManybigLines2; c2++){
+   rotate(225/12);
+   rect(97,0,11,3);
+  };
+  pop();
+
+  //needle (minutes)
   push();
   noStroke();
   fill(225,0,0); //red
-  rotate(225/60*smoothrotatemin+135);
-  rect(5,-5,90,8);
+  rotate(225/60*smoothrotatemin+138);
+  if (seconds == 59 && minutes == 59) {
+    rotate(113/500*-millis);
+  };
+  rect(5,-4,85,8);
   pop();
 
   noStroke();
   fill(80);
   ellipse(0,0,20,20)
-
-  //if (seconds = 0 || seconds = 59){
-   // rotate(225/1000*-millis+135);
-  //}
-
-  translate(+300,0);
+  
+  //needle (seconds)
   push();
+  translate(+300,0);
   noStroke();
   fill(255,0,0); //red
-  rotate(113/500*millis+135);
-  rect(4,-4,75,6);
+  rotate(225/60*smoothrotatesec+138);
+  if (seconds == 59) {
+    rotate(113/500*-millis);
+  };
+  rect(4,-3,75,6);
   pop();
 
-  translate(-300,0);
   noStroke();
   fill(80);
   ellipse(300,0,20,20);
 
-  //rotate(225/60*smoothrotatesec+135);
 }
