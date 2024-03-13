@@ -17,3 +17,6 @@ I got the needle to only move within a certain angle rather than going completel
 
 12/3/24
 I added the numbers to the gauges
+
+14/3/24
+I have decied to replace thee gear stick with another gauge, this allows me to make the entire clock a dashboard and the hours are now a temperature gauge. I am having trouble with converting the 24hr time to 12 hour tiime as i cant seem to get it to reset at the correct time, it just goes past where I want it to go.

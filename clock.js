@@ -20,14 +20,17 @@ function draw_clock(obj) {
   let alarm = obj.seconds_until_alarm;
   let smoothrotatesec = seconds + (millis / 1000.0);
   let smoothrotatemin = minutes + (seconds/60);
+  let smoothrotatehrs = hours + (minutes/60);
   angleMode(DEGREES);
   background(124, 152, 196); //  sky grey blue
   translate(width/2, height/2); 
 
-  //stroke(70);
-  //strokeWeight(15);
-  //fill(30);
-  //ellipse(0,180,1700, 700);
+  stroke(70);
+  strokeWeight(15);
+  fill(30);
+  ellipse(0,180,1700, 700);
+  fill(70);
+  ellipse(0,550,2300,700);
 
   //RPM gauge (seconds)
   stroke(80); //grey
@@ -39,7 +42,13 @@ function draw_clock(obj) {
   stroke(80); //grey
   strokeWeight(6);
   fill(40); //very dark grey
-  ellipse(0,0,260,260)
+  ellipse(0,0,260,260);
+
+  //temp gauge (hours)
+  stroke(80);
+  strokeWeight(6);
+  fill(40);
+  ellipse(-300,0,200,200);
   
   noStroke();
   const gaugeblue = color(31, 15, 252,60);
@@ -49,6 +58,7 @@ function draw_clock(obj) {
   for(let i = 0; i <howManyCircles; i++){
     ellipse(0, 0, sizeStep*i);
     ellipse(300,0, sizeStep*i-30);
+    ellipse(-300,0,sizeStep*i-60);
   }
 
   stroke(230 ,0,0);
@@ -78,6 +88,10 @@ function draw_clock(obj) {
   text('4', 328, -82);
   text('5', 373, -50);
   text('6', 390, 6);
+
+  textSize(10);
+  text('C° (x100)',-300,80);
+  text()
 
   fill(255);
   push();
@@ -118,6 +132,16 @@ function draw_clock(obj) {
   };
   pop();
 
+  push();
+  translate(-300,0);
+  rotate(360-158);
+  let howManyLines3 = 12;
+  for(let d = 0; d <howManyLines3; d++){
+    rotate(120/12);
+    rect(77,0,15,4);
+  };
+  pop();
+
   //needle (minutes)
   push();
   noStroke();
@@ -126,7 +150,7 @@ function draw_clock(obj) {
   if (seconds == 59 && minutes == 59) {
     rotate(113/500*-millis);
   };
-  rect(5,-4,85,8);
+  rect(5,-4,90,8);
   pop();
 
   noStroke();
@@ -142,11 +166,32 @@ function draw_clock(obj) {
   if (seconds == 59) {
     rotate(113/500*-millis);
   };
-  rect(4,-3,75,6);
+  rect(4,-3,80,6);
   pop();
 
   noStroke();
   fill(80);
   ellipse(300,0,20,20);
 
+  //needle (hours)
+  push();
+  translate(-300,0);
+  noStroke();
+  fill(255,0,0); //red
+  if (hours >=0 && hours <=11) {
+    rotate(120/12*smoothrotatehrs+211);
+  };
+  //rotate(120/12*smoothrotatehrs+211);
+  if (hours == 12 && minutes == 59 && seconds == 59) {
+    rotate(60/500*-millis);
+  };
+  if (hours >=12 && hours <=23) {
+    rotate(120/12*smoothrotatehrs+91);
+  };
+  rect(4,-3,60,5);
+  pop();
+
+  noStroke();
+  fill(80);
+  ellipse(-300,0,20,20);
 }
