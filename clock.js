@@ -21,6 +21,44 @@ function draw_clock(obj) {
   let smoothrotatesec = seconds + (millis / 1000.0);
   let smoothrotatemin = minutes + (seconds/60);
   let smoothrotatehrs = hours + (minutes/60);
+
+  if (hours == 0 || hours == 12){
+    realhours = 12
+  };
+  if (hours == 11 || hours == 23){
+    realhours = 11
+  };
+  if (hours == 10 || hours == 22){
+    realhours = 10
+  };
+  if (hours == 9 || hours == 21){
+    realhours = 9
+  };
+  if (hours == 8 || hours == 20){
+    realhours = 8
+  };
+  if (hours == 7 || hours == 19){
+    realhours = 7
+  };
+  if (hours == 6 || hours == 18){
+    realhours = 6
+  };
+  if (hours == 5 || hours == 17){
+    realhours = 5
+  };
+  if (hours == 4 || hours == 16){
+    realhours = 4
+  };
+  if (hours == 3 || hours == 15){
+    realhours = 3
+  };
+  if (hours == 2 || hours == 14){
+    realhours = 2
+  };
+  if (hours == 1 || hours == 13){
+    realhours = 1
+  };
+
   angleMode(DEGREES);
   background(124, 152, 196); //  sky grey blue
   translate(width/2, height/2); 
@@ -178,16 +216,19 @@ function draw_clock(obj) {
   translate(-300,0);
   noStroke();
   fill(255,0,0); //red
-  if (hours >=0 && hours <=11) {
-    rotate(120/12*smoothrotatehrs+211);
-  };
-  //rotate(120/12*smoothrotatehrs+211);
+  //if (hours >=0 && realhours <=11) {
+    //rotate(120/12*smoothrotatehrs+218);
+  //};
+  rotate(120/12*realhours+205);
   if (hours == 12 && minutes == 59 && seconds == 59) {
     rotate(60/500*-millis);
   };
-  if (hours >=12 && hours <=23) {
-    rotate(120/12*smoothrotatehrs+91);
-  };
+  //if (hours == 0 && minutes ==59 && seconds == 59) {
+  //  rotate(60/500*-millis);
+  //  };
+  //if (hours >=12 && hours <=23) {
+  //  rotate(120/12*smoothrotatehrs+99);
+  //};
   rect(4,-3,60,5);
   pop();
 
