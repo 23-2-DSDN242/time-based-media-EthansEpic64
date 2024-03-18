@@ -25,3 +25,6 @@ I have decied to replace thee gear stick with another gauge, this allows me to m
 I am trying to get the hour gaueg to reset every 12 hours but something must be wrong with my maths or there is some inherent problem with the method im using because it starts on 12 and goes to 11 rather than starting on 1 and going to 12. Ive tried minusing one from the hours variable but it starts on zero and it doesnt like -1 as a number so it doesnt really work. However I have just thought of something that might work as im writing this. It is to use if functions to change the number for every hour- for example : if hours = 0, let realhours = 12
 
 Well the aformentioned method works but it seems a bit inefficient and for some reason trying to make it smoothly rotate kills the whole code and im not sure why. Good step forward either way.
+
+18/03/24
+I have finished the gauges and their functions, next job is to do the alarm and draw all of the warning lights for it, Had a bit of trouble with figuring out how many numbers I should include on the hours gauge but I think only including the 1 and the 12 is the cleanest look.

@@ -21,6 +21,7 @@ function draw_clock(obj) {
   let smoothrotatesec = seconds + (millis / 1000.0);
   let smoothrotatemin = minutes + (seconds/60);
   let smoothrotatehrs = hours + (minutes/60);
+  strokeCap(SQUARE);
 
   if (hours == 0 || hours == 12){
     realhours = 12
@@ -102,7 +103,16 @@ function draw_clock(obj) {
   stroke(230 ,0,0);
   noFill();
   strokeWeight(8);
-  arc(300,0,208,208,-32.5,2);
+  arc(300,0,208,208,-33,3);
+
+  push();
+  translate(-300,0);
+  stroke(230 ,0,0);
+  noFill();
+  strokeWeight(12);
+  rotate(-40)
+  arc(0,0,174,174,-26,2);
+  pop();
 
   noStroke();
   fill(255);
@@ -129,7 +139,19 @@ function draw_clock(obj) {
 
   textSize(10);
   text('C° (x100)',-300,80);
-  text()
+  textSize(15);
+  text('1',-361,-38);
+  //text('2',-353,-48);
+  //text('3',-343,-56);
+  //text('4',-333,-64);
+  //text('5',-322,-68);
+  //text('6',-308,-69);
+  //text('7',-296,-71);
+  //text('8',-283,-70);
+  //text('9',-271,-62);
+  //text('10',-261,-58);
+  //text('11',-251,-48);
+  text('12',-247,-39);
 
   fill(255);
   push();
@@ -152,7 +174,7 @@ function draw_clock(obj) {
 
   push();
   translate(+300,0);
-  rotate(360-222)
+  rotate(360-222);
   let howManyLines2 = 60;
   for(let c = 0; c <howManyLines2; c++){
    rotate(225/60);
@@ -176,7 +198,7 @@ function draw_clock(obj) {
   let howManyLines3 = 12;
   for(let d = 0; d <howManyLines3; d++){
     rotate(120/12);
-    rect(77,0,15,4);
+    rect(80,0,13,3);
   };
   pop();
 
