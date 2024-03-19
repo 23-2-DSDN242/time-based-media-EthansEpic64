@@ -20,7 +20,6 @@ function draw_clock(obj) {
   let alarm = obj.seconds_until_alarm;
   let smoothrotatesec = seconds + (millis / 1000.0);
   let smoothrotatemin = minutes + (seconds/60);
-  let smoothrotatehrs = hours + (minutes/60);
   strokeCap(SQUARE);
 
   if (hours == 0 || hours == 12){
@@ -59,6 +58,8 @@ function draw_clock(obj) {
   if (hours == 1 || hours == 13){
     realhours = 1
   };
+
+  let smoothrotatehrs = realhours + (minutes/60);
 
   angleMode(DEGREES);
   background(124, 152, 196); //  sky grey blue
@@ -110,8 +111,8 @@ function draw_clock(obj) {
   stroke(230 ,0,0);
   noFill();
   strokeWeight(12);
-  rotate(-40)
-  arc(0,0,174,174,-26,2);
+  rotate(-30)
+  arc(0,0,174,174,-28,2);
   pop();
 
   noStroke();
@@ -141,17 +142,7 @@ function draw_clock(obj) {
   text('C° (x100)',-300,80);
   textSize(15);
   text('1',-361,-38);
-  //text('2',-353,-48);
-  //text('3',-343,-56);
-  //text('4',-333,-64);
-  //text('5',-322,-68);
-  //text('6',-308,-69);
-  //text('7',-296,-71);
-  //text('8',-283,-70);
-  //text('9',-271,-62);
-  //text('10',-261,-58);
-  //text('11',-251,-48);
-  text('12',-247,-39);
+  text('12',-247,-40);
 
   fill(255);
   push();
@@ -194,10 +185,10 @@ function draw_clock(obj) {
 
   push();
   translate(-300,0);
-  rotate(360-158);
+  rotate(200);
   let howManyLines3 = 12;
   for(let d = 0; d <howManyLines3; d++){
-    rotate(120/12);
+    rotate(130/13);
     rect(80,0,13,3);
   };
   pop();
@@ -238,23 +229,66 @@ function draw_clock(obj) {
   translate(-300,0);
   noStroke();
   fill(255,0,0); //red
-  //if (hours >=0 && realhours <=11) {
-    //rotate(120/12*smoothrotatehrs+218);
-  //};
-  rotate(120/12*realhours+205);
-  if (hours == 12 && minutes == 59 && seconds == 59) {
+
+  rotate(130/13*(smoothrotatehrs)+201);
+  if (realhours == 12 && minutes == 0 && seconds == 0) {
     rotate(60/500*-millis);
   };
-  //if (hours == 0 && minutes ==59 && seconds == 59) {
-  //  rotate(60/500*-millis);
-  //  };
-  //if (hours >=12 && hours <=23) {
-  //  rotate(120/12*smoothrotatehrs+99);
-  //};
-  rect(4,-3,60,5);
+   
+  rect(4,-3,65 ,5);
   pop();
 
   noStroke();
   fill(80);
   ellipse(-300,0,20,20);
+
+  //AM/PM lights
+  let warningblue = color(0, 21, 255);
+  let warningorange = color(255, 98, 0);
+  let x1 = -315;
+  let y1 = 120;
+  let size1 = 10;
+  let x2 = -285;
+  textSize(11);
+  if (hours <=11) {
+    fill(warningblue);
+    push();
+    drawingContext.shadowBlur = 20;
+    drawingContext.shadowColor = color(warningblue);
+    text('AM',x1,y1+12);
+    text('AM',x1,y1+12);
+    text('AM',x1,y1+12);
+    text('AM',x1,y1+12);
+    ellipse(x1,y1,size1);
+    ellipse(x1,y1,size1);
+    ellipse(x1,y1,size1);
+    ellipse(x1,y1,size1);
+   //the reason there is 4 of them layered on top of each other is because it is the simplest way to alter the intensity of the 'light' effect
+    pop();
+    //PM turned OFF
+    fill(25);
+    text('PM',x2,y1+12);
+    ellipse(x2,y1,size1);
+  }
+
+  if (hours >=12) {
+    fill(warningorange);
+    push();
+    drawingContext.shadowBlur = 20;
+    drawingContext.shadowColor = color(warningorange);
+    text('PM',x2,y1+12);
+    text('PM',x2,y1+12);
+    text('PM',x2,y1+12);
+    text('PM',x2,y1+12);
+    ellipse(x2,y1,size1);
+    ellipse(x2,y1,size1);
+    ellipse(x2,y1,size1);
+    ellipse(x2,y1,size1);
+    //the reason there is 4 of them layered on top of each other is because it is the simplest way to alter the intensity of the 'light' effect
+    pop();
+    //PM turned OFF
+    fill(25);
+    text('AM',x1,y1+12);
+    ellipse(x1,y1,size1);
+  }
 }
