@@ -21,6 +21,9 @@ function draw_clock(obj) {
   let smoothrotatesec = seconds + (millis / 1000.0);
   let smoothrotatemin = minutes + (seconds/60);
   strokeCap(SQUARE);
+  angleMode(DEGREES);
+  background(124, 152, 196); //  sky grey blue
+  translate(width/2, height/2); 
 
   if (hours == 0 || hours == 12){
     realhours = 12
@@ -61,9 +64,15 @@ function draw_clock(obj) {
 
   let smoothrotatehrs = realhours + (minutes/60);
 
-  angleMode(DEGREES);
-  background(124, 152, 196); //  sky grey blue
-  translate(width/2, height/2); 
+  let roadmarker = (millis/2)*minutes/60;
+  noStroke();
+  fill(28, 77, 32);
+  quad(-500,-270,-280,-270,-500,-100,-500,-100);
+  quad(500,-270,280,-270,500,-100,500,-100);
+  fill(35);
+  quad(280,-270,-280,-270,-500,-100,500,-100);
+  fill(171, 168, 24);
+  quad(-6-roadmarker/20,-370+roadmarker, 6+roadmarker/20, -370+roadmarker, 12+roadmarker/20,-300+roadmarker, -12-roadmarker/20,-300+roadmarker);
 
   stroke(70);
   strokeWeight(15);
