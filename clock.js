@@ -75,8 +75,9 @@ function draw_clock(obj) {
   strokeWeight(15);
   fill(30); //very dark grey
   ellipse(0,180,1700, 700); //main dashboard component
-  fill(80); //light grey
-  ellipse(0,550,2300,700); //lower lighter dashboard component
+  noStroke();
+  fill(25); //light grey
+  ellipse(0,550,2300,750); //lower lighter dashboard component
 
   //RPM gauge (seconds)
   stroke(80); //grey
@@ -273,7 +274,7 @@ function draw_clock(obj) {
   } else{
      var activefill2 = color(25); //very dark grey
   }
-  if(alarm == 0){
+  if(alarm == 0 && millis <=460 && millis >=2){
     var activefill3 = color(warningred); //allows the fill to be changed when the alarm is active
   } else{
      var activefill3 = color(25); //very dark grey
@@ -446,15 +447,45 @@ function draw_clock(obj) {
   }
 
   function drawoillevel(oillevelx,oillevely) {
-   fill(255); //CHANGE
-   ellipse(oillevelx,oillevely,5,5);
    noFill();
    strokeWeight(2);
-   stroke(255); //DELETE
    strokeCap(SQUARE);
-   line(oillevelx-1,oillevely,oillevelx,oillevely-4);
-   line(oillevelx+1,oillevely)
+   beginShape();
+     strokeWeight(0.8);
+     fill(activefill3);
+     vertex(oillevelx,oillevely-5);
+     quadraticVertex(oillevelx+3, oillevely, oillevelx, oillevely+1);
+     quadraticVertex(oillevelx-3,oillevely, oillevelx, oillevely-5);
+   endShape(); //adapted this water droplet shape from zygugi on p5.js Web Editor
+   beginShape();
+    strokeWeight(2);
+    noFill();
+    vertex(oillevelx-0.5,oillevely-8.5);
+    vertex(oillevelx-2,oillevely-11);
+    vertex(oillevelx-14,oillevely-7);
+    vertex(oillevelx-16,oillevely-9);
+    vertex(oillevelx-27,oillevely-9);
+    vertex(oillevelx-27,oillevely-12);
+    vertex(oillevelx-33,oillevely-13);
+    vertex(oillevelx-34,oillevely-9);
+    vertex(oillevelx-27,oillevely-8);
+    vertex(oillevelx-27,oillevely);
+    vertex(oillevelx-11,oillevely);
+    vertex(oillevelx-6,oillevely-9);
+  endShape();
+    line(oillevelx-21,oillevely-9,oillevelx-21,oillevely-12);
+    line(oillevelx-24,oillevely-12,oillevelx-18,oillevely-12);
   }
+
+  function drawtemp(tempx,tempy){
+    fill(255); //CHANGE
+    ellipse(tempx,tempy,7,7);
+    noFill();
+    stroke(255); //DELETE
+    strokeWeight(3);
+    strokeCap(ROUND);
+    line(tempx,tempy,tempx,tempy-12);
+  };
 
   let batteryx2 = -180
   let batteryy2 = -80
@@ -471,8 +502,11 @@ function draw_clock(obj) {
   let airbagx2 = 158
   let airbagy2 = -20
 
-  let oillevelx2 = -180
+  let oillevelx2 = -175
   let oillevely2 = 80
+
+  let tempx2 = -400
+  let tempy2 = 80
  
   stroke(25);
   strokeWeight(2);
@@ -483,6 +517,7 @@ function draw_clock(obj) {
   drawabs(absx2,absy2);
   drawairbag(airbagx2,airbagy2);
   drawoillevel(oillevelx2,oillevely2);
+  drawtemp(tempx2,tempy2);
 
   if(alarm == 0 && millis >= 500){
   stroke(warningred);
@@ -551,6 +586,35 @@ function draw_clock(obj) {
     drawairbag(airbagx2,airbagy2);
     drawairbag(airbagx2,airbagy2);
     drawairbag(airbagx2,airbagy2);
+    pop();
+  };
+
+  
+  if(alarm == 0 && millis <=460 && millis >=2){
+    stroke(warningred);
+    noFill();
+    strokeWeight(2);
+    push();
+    drawingContext.shadowBlur = 20;
+    drawingContext.shadowColor = color(warningred);
+    drawoillevel(oillevelx2,oillevely2);
+    drawoillevel(oillevelx2,oillevely2);
+    drawoillevel(oillevelx2,oillevely2);
+    drawoillevel(oillevelx2,oillevely2);
+    pop();
+  };
+
+  if(alarm == 0 && millis >= 208 && millis <= 756){
+    stroke(warningred);
+    noFill();
+    strokeWeight(2);
+    push();
+    drawingContext.shadowBlue = 20;
+    drawingContext.shadowColor = color(warningred);
+    drawtemp(tempx2,tempy2);
+    drawtemp(tempx2,tempy2);
+    drawtemp(tempx2,tempy2);
+    drawtemp(tempx2,tempy2);
     pop();
   };
 }
