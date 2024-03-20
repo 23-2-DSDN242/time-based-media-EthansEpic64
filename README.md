@@ -28,3 +28,9 @@ Well the aformentioned method works but it seems a bit inefficient and for some 
 
 18/03/24
 I have finished the gauges and their functions, next job is to do the alarm and draw all of the warning lights for it, Had a bit of trouble with figuring out how many numbers I should include on the hours gauge but I think only including the 1 and the 12 is the cleanest look.
+
+19/03/24
+I finally figured out why the hours gauge wasnt rotating smoothly, I was calling a function before it was declared so all i had to do was cut and paste a line of code to a lower line and it worked. I then fixed some maths with how the needle reset and when and the hours guage is now fully completed. I also added the AM/PM lights and made them look like they were actually emmitting light. I did this with drawingContext.shadowblur and shadowcolor.
+
+20/03/24
+I added a road to make it look like the car is moving because the background felt a bit empty and pointless
