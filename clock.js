@@ -304,12 +304,6 @@ function draw_clock(obj) {
     ellipse(x1,y1,size1);
   }
   
-  map(millis,0,999,0,1)
-  stroke(25);
-  strokeWeight(2);
-  noFill();
-  drawbattery(170,-80);
-
   function drawbattery(batteryx,batteryy) {
     beginShape(); //main battery outline
   vertex(batteryx,batteryy);
@@ -331,7 +325,22 @@ function draw_clock(obj) {
   line(batteryx-20,batteryy+7,batteryx-15,batteryy+7);//battery negative
   };
 
-  if(alarm == 0 && millis == 1){
+  function drawengine(enginex,enginey) {
+    beginshape();
+    vertex(enginex,enginey);
+    vertex(enginex,enginey-10);
+    endShape();
+  };
+
+  push();
+  stroke(255,0,0);
+  strokeWeight(2);
+  noFill();
+  drawbattery(170,-80);
+  drawengine(170,-20);
+  pop();
+
+  if(alarm == 0 && millis >= 500){
   stroke(warningred);
   strokeWeight(2);
   noFill();
@@ -343,5 +352,5 @@ function draw_clock(obj) {
   drawbattery(170,-80);
   drawbattery(170,-80);
   pop();
-  }
+  };
 }
