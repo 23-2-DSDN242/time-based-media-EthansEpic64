@@ -211,6 +211,9 @@ function draw_clock(obj) {
   if (seconds == 59 && minutes == 59) {
     rotate(113/500*-millis);
   };
+  if (alarm == 0) {
+    rotate(360/500*millis*2);
+  };
   rect(5,-4,90,8);
   pop();
 
@@ -225,7 +228,10 @@ function draw_clock(obj) {
   fill(255,0,0); //red
   rotate(225/60*smoothrotatesec+138);
   if (seconds == 59) {
-    rotate(113/500*-millis);
+    rotate(113/500*-millis*0.8);
+  };
+  if (alarm == 0) {
+    rotate(360/500*-millis);
   };
   rect(4,-3,80,6);
   pop();
@@ -244,7 +250,9 @@ function draw_clock(obj) {
   if (realhours == 12 && minutes == 0 && seconds == 0) {
     rotate(60/500*-millis);
   };
-   
+  if (alarm == 0) {
+    rotate(360/500*millis);
+  }; 
   rect(4,-3,65 ,5);
   pop();
 
@@ -255,6 +263,21 @@ function draw_clock(obj) {
   let warningblue = color(0, 21, 255); //bright blue
   let warningorange = color(255, 98, 0); //amber
   let warningred = color(194, 29, 0); //orangey red
+  if(alarm == 0 && millis <=810 && millis >=364){
+    var activefill = color(194,29,0); //allows the fill to be changed when the alarm is active
+   } else{
+      var activefill = color(25); //very dark grey
+    }
+  if(alarm == 0 && millis >= 208 && millis <= 756){
+    var activefill2 = color(194,29,0); //allows the fill to be changed when the alarm is active
+  } else{
+     var activefill2 = color(25); //very dark grey
+  }
+  if(alarm == 0){
+    var activefill3 = color(warningred); //allows the fill to be changed when the alarm is active
+  } else{
+     var activefill3 = color(25); //very dark grey
+  }
 
   //AM/PM lights
   let x1 = -315;
@@ -262,7 +285,7 @@ function draw_clock(obj) {
   let size1 = 10;
   let x2 = -285;
   textSize(11);
-  if (hours <=11) {
+  if (hours <=11 && alarm != 0) {
     fill(warningblue);
     push();
     drawingContext.shadowBlur = 20;
@@ -283,7 +306,7 @@ function draw_clock(obj) {
     ellipse(x2,y1,size1);
   }
 
-  if (hours >=12) {
+  if (hours >=12 && alarm != 0) {
     fill(warningorange);
     push();
     drawingContext.shadowBlur = 20;
@@ -302,6 +325,38 @@ function draw_clock(obj) {
     fill(25);
     text('AM',x1,y1+12);
     ellipse(x1,y1,size1);
+  }
+
+  if(alarm == 0 && millis >= 500) {
+    fill(warningorange);
+    push();
+    drawingContext.shadowBlur = 20;
+    drawingContext.shadowColor = color(warningorange);
+    text('PM',x2,y1+12);
+    text('PM',x2,y1+12);
+    text('PM',x2,y1+12);
+    text('PM',x2,y1+12);
+    ellipse(x2,y1,size1);
+    ellipse(x2,y1,size1);
+    ellipse(x2,y1,size1);
+    ellipse(x2,y1,size1);
+    pop();
+  }
+
+  if(alarm == 0 && millis <= 500) {
+    fill(warningblue);
+    push();
+    drawingContext.shadowBlur = 20;
+    drawingContext.shadowColor = color(warningblue);
+    text('AM',x1,y1+12);
+    text('AM',x1,y1+12);
+    text('AM',x1,y1+12);
+    text('AM',x1,y1+12);
+    ellipse(x1,y1,size1);
+    ellipse(x1,y1,size1);
+    ellipse(x1,y1,size1);
+    ellipse(x1,y1,size1);
+    pop();
   }
   
   function drawbattery(batteryx,batteryy) {
@@ -325,20 +380,109 @@ function draw_clock(obj) {
   line(batteryx-20,batteryy+7,batteryx-15,batteryy+7);//battery negative
   };
 
-  function drawengine(enginex,enginey) {
-    beginshape();
-    vertex(enginex,enginey);
-    vertex(enginex,enginey-10);
-    endShape();
+ function drawengine(enginex,enginey) {
+   beginShape();
+   vertex(enginex,enginey);
+   vertex(enginex,enginey+2);
+   vertex(enginex+3,enginey+2);
+   vertex(enginex+3,enginey+6);
+   vertex(enginex+5.5,enginey+6);
+   vertex(enginex+5.5,enginey+4);
+   vertex(enginex+8,enginey+4);
+   vertex(enginex+8,enginey+12);
+   vertex(enginex+5.5,enginey+12);
+   vertex(enginex+5.5,enginey+10);
+   vertex(enginex+3,enginey+10);
+   vertex(enginex+3,enginey+14);
+   vertex(enginex-8,enginey+14);
+   vertex(enginex-10,enginey+12);
+   vertex(enginex-13,enginey+12);
+   vertex(enginex-13,enginey+2);
+   vertex(enginex-10,enginey+2);
+   vertex(enginex-10,enginey);
+   vertex(enginex,enginey);
+   endShape();
+   line(enginex-13,enginey+7,enginex-15.5,enginey+7);
+   line(enginex-16,enginey+2,enginex-16,enginey+12);
+   line(enginex-5,enginey,enginex-5,enginey-3);
+   line(enginex-10,enginey-3,enginex,enginey-3);
   };
+  
+  function drawhbrake(hbrakex,hbrakey) {
+   ellipse(hbrakex,hbrakey,20,20);
+   arc(hbrakex,hbrakey,27,27,-50,50);
+   arc(hbrakex,hbrakey,27,27,130,-130);
+   line(hbrakex,hbrakey-6,hbrakex,hbrakey+1);
+   fill(activefill2);
+   ellipse(hbrakex,hbrakey+4,1,1);
+   noFill();
+  }
 
-  push();
-  stroke(255,0,0);
+  function drawabs(absx,absy) {
+    ellipse(absx,absy,20,20);
+    arc(absx,absy,27,27,-50,50);
+    arc(absx,absy,27,27,130,-130);
+    push();
+    strokeWeight(0.45);
+    textSize(7);
+    text('ABS',absx,absy);
+    pop();
+   }
+
+  function drawairbag(airbagx,airbagy) {
+    fill(activefill);
+    ellipse(airbagx,airbagy,7,7);
+    ellipse(airbagx+8.5,airbagy-1,4,4);
+    noFill();
+    push();
+    strokeWeight(3);
+    strokeCap(ROUND);
+    line(airbagx+6.5,airbagy+4.5,airbagx+5.5,airbagy+7);
+    line(airbagx+0.5,airbagy+9,airbagx-3.5,airbagy+7.5);
+    line(airbagx-3.5,airbagy+7.5,airbagx-7,airbagy+13);
+    strokeWeight(1);
+    line(airbagx+2,airbagy+7,airbagx+4.5,airbagy+12);
+    pop();
+  }
+
+  function drawoillevel(oillevelx,oillevely) {
+   fill(255); //CHANGE
+   ellipse(oillevelx,oillevely,5,5);
+   noFill();
+   strokeWeight(2);
+   stroke(255); //DELETE
+   strokeCap(SQUARE);
+   line(oillevelx-1,oillevely,oillevelx,oillevely-4);
+   line(oillevelx+1,oillevely)
+  }
+
+  let batteryx2 = -180
+  let batteryy2 = -80
+
+  let enginex2 = -135
+  let enginey2 = -80
+
+  let hbrakex2 = 140
+  let hbrakey2 = -70
+
+  let absx2 = 180
+  let absy2 = -70
+
+  let airbagx2 = 158
+  let airbagy2 = -20
+
+  let oillevelx2 = -180
+  let oillevely2 = 80
+ 
+  stroke(25);
   strokeWeight(2);
   noFill();
-  drawbattery(170,-80);
-  drawengine(170,-20);
-  pop();
+  drawbattery(batteryx2,batteryy2);
+  drawengine(enginex2,enginey2);
+  drawhbrake(hbrakex2,hbrakey2);
+  drawabs(absx2,absy2);
+  drawairbag(airbagx2,airbagy2);
+  drawoillevel(oillevelx2,oillevely2);
 
   if(alarm == 0 && millis >= 500){
   stroke(warningred);
@@ -347,10 +491,66 @@ function draw_clock(obj) {
   push();
   drawingContext.shadowBlur = 20;
   drawingContext.shadowColor = color(warningred);
-  drawbattery(170,-80);
-  drawbattery(170,-80);
-  drawbattery(170,-80);
-  drawbattery(170,-80);
+  drawbattery(batteryx2,batteryy2);
+  drawbattery(batteryx2,batteryy2);
+  drawbattery(batteryx2,batteryy2);
+  drawbattery(batteryx2,batteryy2);
   pop();
+  };
+
+  if(alarm == 0 && millis <= 680){
+  stroke(warningorange);
+  strokeWeight(2);
+  noFill();
+  push();
+  drawingContext.shadowBlur = 20;
+  drawingContext.shadowColor = color(warningorange);
+  drawengine(enginex2,enginey2);
+  drawengine(enginex2,enginey2);
+  drawengine(enginex2,enginey2);
+  drawengine(enginex2,enginey2);
+  pop();
+  };
+  
+  if(alarm == 0 && millis >= 208 && millis <= 756){
+    stroke(warningred);
+    strokeWeight(2);
+    noFill();
+    push();
+    drawingContext.shadowBlur = 20;
+    drawingContext.shadowColor = color(warningred);
+    drawhbrake(hbrakex2,hbrakey2);
+    drawhbrake(hbrakex2,hbrakey2);
+    drawhbrake(hbrakex2,hbrakey2);
+    drawhbrake(hbrakex2,hbrakey2);
+    pop();
+  };
+
+  if(alarm == 0 && millis <= 330){
+    stroke(warningorange);
+    strokeWeight(2);
+    noFill();
+    push();
+    drawingContext.shadowBlur = 20;
+    drawingContext.shadowColor = color(warningorange);
+    drawabs(absx2,absy2);
+    drawabs(absx2,absy2);
+    drawabs(absx2,absy2);
+    drawabs(absx2,absy2);
+    pop();
+  };
+
+  if(alarm == 0 && millis <=810 && millis >=364){
+    stroke(warningred);
+    noFill();
+    strokeWeight(2);
+    push();
+    drawingContext.shadowBlur = 20;
+    drawingContext.shadowColor = color(warningred);
+    drawairbag(airbagx2,airbagy2);
+    drawairbag(airbagx2,airbagy2);
+    drawairbag(airbagx2,airbagy2);
+    drawairbag(airbagx2,airbagy2);
+    pop();
   };
 }
