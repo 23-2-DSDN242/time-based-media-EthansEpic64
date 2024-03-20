@@ -73,7 +73,7 @@ function draw_clock(obj) {
 
   stroke(80); //lightish grey (used for the outline of the dash and the gauges)
   strokeWeight(15);
-  fill(30); //very dark grey
+  fill(35); //very dark grey
   ellipse(0,180,1700, 700); //main dashboard component
   noStroke();
   fill(25); //light grey
@@ -152,8 +152,8 @@ function draw_clock(obj) {
   textSize(10);
   text('C° (x100)',-300,80);
   textSize(15);
-  text('1',-361,-38);
-  text('12',-247,-40);
+  text('1',-360,-38);
+  text('12',-249,-42);
 
   fill(255);
   push();
@@ -264,6 +264,7 @@ function draw_clock(obj) {
   let warningblue = color(0, 21, 255); //bright blue
   let warningorange = color(255, 98, 0); //amber
   let warningred = color(194, 29, 0); //orangey red
+  let warninggreen = color(26, 163, 16); //neutral green
   if(alarm == 0 && millis <=810 && millis >=364){
     var activefill = color(194,29,0); //allows the fill to be changed when the alarm is active
    } else{
@@ -278,6 +279,11 @@ function draw_clock(obj) {
     var activefill3 = color(warningred); //allows the fill to be changed when the alarm is active
   } else{
      var activefill3 = color(25); //very dark grey
+  }
+  if(alarm == 0 && millis <=500){
+    var activefill4 = color(warninggreen);
+  } else{
+    var activefill4 = color(25);
   }
 
   //AM/PM lights
@@ -359,8 +365,8 @@ function draw_clock(obj) {
     ellipse(x1,y1,size1);
     pop();
   }
-  
-  function drawbattery(batteryx,batteryy) {
+  //Other warning light functions
+  function drawbattery(batteryx,batteryy) {//battery
     beginShape(); //main battery outline
   vertex(batteryx,batteryy);
   vertex(batteryx,batteryy+15);
@@ -381,7 +387,7 @@ function draw_clock(obj) {
   line(batteryx-20,batteryy+7,batteryx-15,batteryy+7);//battery negative
   };
 
- function drawengine(enginex,enginey) {
+ function drawengine(enginex,enginey) { //engine light
    beginShape();
    vertex(enginex,enginey);
    vertex(enginex,enginey+2);
@@ -403,13 +409,13 @@ function draw_clock(obj) {
    vertex(enginex-10,enginey);
    vertex(enginex,enginey);
    endShape();
-   line(enginex-13,enginey+7,enginex-15.5,enginey+7);
+   line(enginex-13,enginey+7,enginex-15.5,enginey+7); //fans
    line(enginex-16,enginey+2,enginex-16,enginey+12);
    line(enginex-5,enginey,enginex-5,enginey-3);
    line(enginex-10,enginey-3,enginex,enginey-3);
   };
   
-  function drawhbrake(hbrakex,hbrakey) {
+  function drawhbrake(hbrakex,hbrakey) { //handbrake light
    ellipse(hbrakex,hbrakey,20,20);
    arc(hbrakex,hbrakey,27,27,-50,50);
    arc(hbrakex,hbrakey,27,27,130,-130);
@@ -419,7 +425,7 @@ function draw_clock(obj) {
    noFill();
   }
 
-  function drawabs(absx,absy) {
+  function drawabs(absx,absy) { //abs light
     ellipse(absx,absy,20,20);
     arc(absx,absy,27,27,-50,50);
     arc(absx,absy,27,27,130,-130);
@@ -430,7 +436,7 @@ function draw_clock(obj) {
     pop();
    }
 
-  function drawairbag(airbagx,airbagy) {
+  function drawairbag(airbagx,airbagy) { //airbag light
     fill(activefill);
     ellipse(airbagx,airbagy,7,7);
     ellipse(airbagx+8.5,airbagy-1,4,4);
@@ -446,7 +452,7 @@ function draw_clock(obj) {
     pop();
   }
 
-  function drawoillevel(oillevelx,oillevely) {
+  function drawoillevel(oillevelx,oillevely) { //oil level light
    noFill();
    strokeWeight(2);
    strokeCap(SQUARE);
@@ -477,18 +483,60 @@ function draw_clock(obj) {
     line(oillevelx-24,oillevely-12,oillevelx-18,oillevely-12);
   }
 
-  function drawtemp(tempx,tempy){
-    fill(255); //CHANGE
-    ellipse(tempx,tempy,7,7);
+  function drawtemp(tempx,tempy){ //oil temperature light
+    fill(activefill2);
+    ellipse(tempx,tempy,4,4);
     noFill();
-    stroke(255); //DELETE
     strokeWeight(3);
     strokeCap(ROUND);
     line(tempx,tempy,tempx,tempy-12);
+    strokeWeight(2);
+    line(tempx,tempy-11,tempx+5,tempy-11);
+    line(tempx,tempy-7.5,tempx+5,tempy-7.5);
+    line(tempx,tempy-4,tempx+5,tempy-4);
+    (push);
+    strokeWeight(1);
+    textSize(8);
+    text('~~~~',tempx,tempy+6);
+    textSize(10);
+    text('~',tempx-7,tempy);
+    text('~',tempx+7,tempy);
+    pop();
   };
 
-  let batteryx2 = -180
-  let batteryy2 = -80
+  function drawtcs(tcsx,tcsy){ //traction control light
+    noFill();
+    strokeWeight(2);
+    strokeCap(SQUARE);
+    beginShape();
+    vertex(tcsx+1.5,tcsy);
+    vertex(tcsx-10,tcsy);
+    vertex(tcsx-13,tcsy+6);
+    vertex(tcsx-13,tcsy+14);
+    vertex(tcsx-11,tcsy+14);
+    vertex(tcsx-11,tcsy+12);
+    vertex(tcsx+2,tcsy+12);
+    vertex(tcsx+2,tcsy+14);
+    vertex(tcsx+4,tcsy+14);
+    vertex(tcsx+4,tcsy+6);
+    vertex(tcsx+1,tcsy);
+    endShape();
+    line(tcsx-15,tcsy+4,tcsx+6,tcsy+4);
+    line(tcsx-13,tcsy+8,tcsx-8,tcsy+8);
+    line(tcsx+4,tcsy+8,tcsx-1,tcsy+8);
+    push();
+    translate(+160,+20);
+    rotate(90);
+    textSize(12);
+    text('~',tcsx+140,tcsy+351);
+    text('~',tcsx+140,tcsy+336);
+    pop();
+  }
+
+//MAKE THE INDICATORS HERE!!!!!
+
+  let batteryx2 = -180 //variables for the positions of each light because
+  let batteryy2 = -80 // the function is called severall times and I dont want to change every instance if i decide to move a light
 
   let enginex2 = -135
   let enginey2 = -80
@@ -507,8 +555,14 @@ function draw_clock(obj) {
 
   let tempx2 = -400
   let tempy2 = 80
- 
-  stroke(25);
+
+  let tcsx2 = -160
+  let tcsy2 = -20
+
+  let indicatex2 = 0
+  let indicatey2 = 80
+
+  stroke(25); //draws  all lights when they  are off
   strokeWeight(2);
   noFill();
   drawbattery(batteryx2,batteryy2);
@@ -518,6 +572,22 @@ function draw_clock(obj) {
   drawairbag(airbagx2,airbagy2);
   drawoillevel(oillevelx2,oillevely2);
   drawtemp(tempx2,tempy2);
+  drawtcs(tcsx2,tcsy2);
+  drawindicate(indicatex2,indicatey2);
+
+  if(alarm > 0){
+    push();
+    stroke(warningorange);
+    strokeWeight(2);
+    noFill();
+    drawingContext.shadowBlur = 20;
+    drawingContext.shadowColor = color(warningorange);
+    drawengine(enginex2,enginey2);
+    drawengine(enginex2,enginey2);
+    drawengine(enginex2,enginey2);
+    drawengine(enginex2,enginey2);
+    pop();
+    };
 
   if(alarm == 0 && millis >= 500){
   stroke(warningred);
@@ -609,7 +679,7 @@ function draw_clock(obj) {
     noFill();
     strokeWeight(2);
     push();
-    drawingContext.shadowBlue = 20;
+    drawingContext.shadowBlur = 20;
     drawingContext.shadowColor = color(warningred);
     drawtemp(tempx2,tempy2);
     drawtemp(tempx2,tempy2);
@@ -617,4 +687,20 @@ function draw_clock(obj) {
     drawtemp(tempx2,tempy2);
     pop();
   };
+
+  if(alarm == 0 && millis >= 130 && millis <= 910){
+    stroke(warningorange);
+    noFill();
+    strokeWeight(2);
+    push();
+    drawingContext.shadowBlur = 20;
+    drawingContext.shadowColor = color(warningorange);
+    drawtcs(tcsx2,tcsy2);
+    drawtcs(tcsx2,tcsy2);
+    drawtcs(tcsx2,tcsy2);
+    drawtcs(tcsx2,tcsy2);
+    pop();
+    }
+
+
 }
