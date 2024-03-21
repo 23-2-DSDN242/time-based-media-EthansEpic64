@@ -11,8 +11,6 @@ function draw_clock(obj) {
   //        < 0 if no alarm is set
   //        = 0 if the alarm is currently going off
   //        > 0 --> the number of seconds until alarm should go off
-  textSize(10);
-  textAlign(CENTER, CENTER);
   let hours = obj.hours;
   let minutes = obj.minutes;
   let seconds = obj.seconds;
@@ -20,10 +18,6 @@ function draw_clock(obj) {
   let alarm = obj.seconds_until_alarm;
   let smoothrotatesec = seconds + (millis / 1000.0); //allows the needle to rotate smoothly rather than tick
   let smoothrotatemin = minutes + (seconds/60); //allows the needle to rotate smoothly rather than tick
-  strokeCap(SQUARE);
-  angleMode(DEGREES);
-  background(28, 77, 32); //grass green
-  translate(width/2, height/2); 
 
   if (hours == 0 || hours == 12){
     realhours = 12
@@ -64,6 +58,15 @@ function draw_clock(obj) {
 
   let smoothrotatehrs = realhours + (minutes/60); //allows the needle to rotate smoothly rather than tick
 
+  textSize(10);
+  textAlign(CENTER, CENTER);
+  strokeCap(SQUARE);
+  angleMode(DEGREES);
+  background(28, 77, 32); //grass green
+  translate(width/2, height/2); 
+
+  //BACKGROUND AND DASHBOARD VVV
+
   let roadmarker = (millis/2); //equation to make the yellow lines on the road change their perspective as they get closer to the viewer
   noStroke();
   fill(35); //road grey
@@ -78,6 +81,8 @@ function draw_clock(obj) {
   noStroke();
   fill(25); //light grey
   ellipse(0,550,2300,750); //lower lighter dashboard component
+
+  //GAUGE BACKGROUNDS VVV
 
   //RPM gauge (seconds)
   stroke(80); //grey
@@ -122,6 +127,8 @@ function draw_clock(obj) {
   arc(0,0,174,174,-28,2); //redline of the temperature gauge
   pop();
 
+  //TEXT AND MARKINGS ON THE GAUGES VVV
+
   //text on the kmh gauge
   noStroke();
   fill(255);
@@ -155,7 +162,7 @@ function draw_clock(obj) {
   text('1',-360,-38);
   text('12',-249,-42);
 
-  fill(255);
+  fill(255); //white
   push();
   rotate(360-222)
   let howManyLines = 60;
@@ -204,6 +211,8 @@ function draw_clock(obj) {
   };
   pop();
 
+  //GAUGE NEEDLES AND ASSOCIATED ROTATE FUNCTIONS
+
   //needle (minutes)
   push();
   noStroke();
@@ -212,7 +221,7 @@ function draw_clock(obj) {
   if (seconds == 59 && minutes == 59) {
     rotate(113/500*-millis);
   };
-  if (alarm == 0) {
+  if (alarm == 0) { //makes the needle go crazy when the alarm goes off
     rotate(360/500*millis*2);
   };
   rect(5,-4,90,8);
@@ -220,7 +229,7 @@ function draw_clock(obj) {
 
   noStroke();
   fill(80);
-  ellipse(0,0,20,20)
+  ellipse(0,0,20,20) //center of the needle
   
   //needle (seconds)
   push();
@@ -229,9 +238,9 @@ function draw_clock(obj) {
   fill(255,0,0); //red
   rotate(225/60*smoothrotatesec+138);
   if (seconds == 59) {
-    rotate(113/500*-millis*0.8);
+    rotate(113/500*-millis);
   };
-  if (alarm == 0) {
+  if (alarm == 0) { //makes the needle go crazy when the alarm goes off
     rotate(360/500*-millis);
   };
   rect(4,-3,80,6);
@@ -239,7 +248,7 @@ function draw_clock(obj) {
 
   noStroke();
   fill(80);
-  ellipse(300,0,20,20);
+  ellipse(300,0,20,20);  //center of the needle
 
   //needle (hours)
   push();
@@ -251,7 +260,7 @@ function draw_clock(obj) {
   if (realhours == 12 && minutes == 0 && seconds == 0) {
     rotate(60/500*-millis);
   };
-  if (alarm == 0) {
+  if (alarm == 0) { //makes the needle go crazy when the alarm goes off
     rotate(360/500*millis);
   }; 
   rect(4,-3,65 ,5);
@@ -259,7 +268,9 @@ function draw_clock(obj) {
 
   noStroke();
   fill(80);
-  ellipse(-300,0,20,20);
+  ellipse(-300,0,20,20);  //center of the needle
+
+  //COLOUR VARIABLES FOR THE ALARM VVV
 
   let warningblue = color(0, 21, 255); //bright blue
   let warningorange = color(255, 98, 0); //amber
@@ -280,23 +291,24 @@ function draw_clock(obj) {
   } else{
      var activefill3 = color(25); //very dark grey
   }
-  if(alarm == 0 && millis <=500){
+  if(alarm == 0 && millis >=500){
     var activefill4 = color(warninggreen);
   } else{
     var activefill4 = color(25);
   }
 
-  //AM/PM lights
+  //AM/PM LIGHTS VVV 
+
   let x1 = -315;
   let y1 = 120;
   let size1 = 10;
   let x2 = -285;
   textSize(11);
-  if (hours <=11 && alarm != 0) {
+  if (hours <=11 && alarm != 0) { //If it is AM
     fill(warningblue);
     push();
     drawingContext.shadowBlur = 20;
-    drawingContext.shadowColor = color(warningblue);
+    drawingContext.shadowColor = color(warningblue); //makes the lights have that bloom effect
     text('AM',x1,y1+12);
     text('AM',x1,y1+12);
     text('AM',x1,y1+12);
@@ -313,11 +325,11 @@ function draw_clock(obj) {
     ellipse(x2,y1,size1);
   }
 
-  if (hours >=12 && alarm != 0) {
+  if (hours >=12 && alarm != 0) { //If it is PM
     fill(warningorange);
     push();
     drawingContext.shadowBlur = 20;
-    drawingContext.shadowColor = color(warningorange);
+    drawingContext.shadowColor = color(warningorange); //makes the lights have that bloom effect
     text('PM',x2,y1+12);
     text('PM',x2,y1+12);
     text('PM',x2,y1+12);
@@ -334,11 +346,11 @@ function draw_clock(obj) {
     ellipse(x1,y1,size1);
   }
 
-  if(alarm == 0 && millis >= 500) {
+  if(alarm == 0 && millis >= 500) { //If the alarm is going off
     fill(warningorange);
     push();
     drawingContext.shadowBlur = 20;
-    drawingContext.shadowColor = color(warningorange);
+    drawingContext.shadowColor = color(warningorange); //makes the lights have that bloom effect
     text('PM',x2,y1+12);
     text('PM',x2,y1+12);
     text('PM',x2,y1+12);
@@ -350,7 +362,7 @@ function draw_clock(obj) {
     pop();
   }
 
-  if(alarm == 0 && millis <= 500) {
+  if(alarm == 0 && millis <= 500) { //If the alarm is going off
     fill(warningblue);
     push();
     drawingContext.shadowBlur = 20;
@@ -365,7 +377,9 @@ function draw_clock(obj) {
     ellipse(x1,y1,size1);
     pop();
   }
-  //Other warning light functions
+
+  //WARNING LIGHT DRAW FUNCTIONS VVV
+
   function drawbattery(batteryx,batteryy) {//battery
     beginShape(); //main battery outline
   vertex(batteryx,batteryy);
@@ -494,10 +508,10 @@ function draw_clock(obj) {
     line(tempx,tempy-11,tempx+5,tempy-11);
     line(tempx,tempy-7.5,tempx+5,tempy-7.5);
     line(tempx,tempy-4,tempx+5,tempy-4);
-    (push);
+    push();
     strokeWeight(1);
     textSize(8);
-    text('~~~~',tempx,tempy+6);
+    text('~~~~',tempx,tempy+6); //using the '~' because Its way too hard to make a bunch of tiny little curves
     textSize(10);
     text('~',tempx-7,tempy);
     text('~',tempx+7,tempy);
@@ -533,10 +547,32 @@ function draw_clock(obj) {
     pop();
   }
 
-//MAKE THE INDICATORS HERE!!!!!
+  function drawindicate(indicatex,indicatey){ //indicators
+    fill(activefill4);
+    beginShape();
+    vertex(indicatex-120,indicatey);
+    vertex(indicatex-140,indicatey);
+    vertex(indicatex-140,indicatey-7);
+    vertex(indicatex-155,indicatey+5);
+    vertex(indicatex-140,indicatey+17);
+    vertex(indicatex-140,indicatey+10);
+    vertex(indicatex-120,indicatey+10);
+    endShape();
+    beginShape();
+    vertex(indicatex+120,indicatey);
+    vertex(indicatex+140,indicatey);
+    vertex(indicatex+140,indicatey-7);
+    vertex(indicatex+155,indicatey+5);
+    vertex(indicatex+140,indicatey+17);
+    vertex(indicatex+140,indicatey+10);
+    vertex(indicatex+120,indicatey+10);
+    endShape();
+  }
+
+  //LIGHT POSITION VARIABLES VVV
 
   let batteryx2 = -180 //variables for the positions of each light because
-  let batteryy2 = -80 // the function is called severall times and I dont want to change every instance if i decide to move a light
+  let batteryy2 = -80 // the function is called several times and I dont want to change every instance if i decide to move a light
 
   let enginex2 = -135
   let enginey2 = -80
@@ -562,6 +598,8 @@ function draw_clock(obj) {
   let indicatex2 = 0
   let indicatey2 = 80
 
+  //DRAW LIGHTS WHEN ALARM IS INACTIVE VVV
+
   stroke(25); //draws  all lights when they  are off
   strokeWeight(2);
   noFill();
@@ -575,7 +613,9 @@ function draw_clock(obj) {
   drawtcs(tcsx2,tcsy2);
   drawindicate(indicatex2,indicatey2);
 
-  if(alarm > 0){
+  //DRAW LIGHTS WHEN ALARM IS ACTIVE VVV
+
+  if(alarm > 0){ //engine light to indicate that an alarm is SET
     push();
     stroke(warningorange);
     strokeWeight(2);
@@ -589,8 +629,8 @@ function draw_clock(obj) {
     pop();
     };
 
-  if(alarm == 0 && millis >= 500){
-  stroke(warningred);
+  if(alarm == 0 && millis >= 500){ //battery light when alarm goes off
+  stroke(warningred); //the millis conditions in the if statements are so that the lights flash and they are all different so that they go off at different times and it looks chaotic and panicky
   strokeWeight(2);
   noFill();
   push();
@@ -603,7 +643,7 @@ function draw_clock(obj) {
   pop();
   };
 
-  if(alarm == 0 && millis <= 680){
+  if(alarm == 0 && millis <= 680){ //engine light when alarm goes off
   stroke(warningorange);
   strokeWeight(2);
   noFill();
@@ -617,7 +657,7 @@ function draw_clock(obj) {
   pop();
   };
   
-  if(alarm == 0 && millis >= 208 && millis <= 756){
+  if(alarm == 0 && millis >= 208 && millis <= 756){ //handbrake light when alarm goes off
     stroke(warningred);
     strokeWeight(2);
     noFill();
@@ -631,7 +671,7 @@ function draw_clock(obj) {
     pop();
   };
 
-  if(alarm == 0 && millis <= 330){
+  if(alarm == 0 && millis <= 330){ //ABS light when alarm goes off
     stroke(warningorange);
     strokeWeight(2);
     noFill();
@@ -645,7 +685,7 @@ function draw_clock(obj) {
     pop();
   };
 
-  if(alarm == 0 && millis <=810 && millis >=364){
+  if(alarm == 0 && millis <=810 && millis >=364){ //airbag light when alarm goes off
     stroke(warningred);
     noFill();
     strokeWeight(2);
@@ -660,7 +700,7 @@ function draw_clock(obj) {
   };
 
   
-  if(alarm == 0 && millis <=460 && millis >=2){
+  if(alarm == 0 && millis <=460 && millis >=2){ //oil level light when alarm goes off
     stroke(warningred);
     noFill();
     strokeWeight(2);
@@ -674,7 +714,7 @@ function draw_clock(obj) {
     pop();
   };
 
-  if(alarm == 0 && millis >= 208 && millis <= 756){
+  if(alarm == 0 && millis >= 208 && millis <= 756){ //temperature light when alarm goes off
     stroke(warningred);
     noFill();
     strokeWeight(2);
@@ -688,7 +728,7 @@ function draw_clock(obj) {
     pop();
   };
 
-  if(alarm == 0 && millis >= 130 && millis <= 910){
+  if(alarm == 0 && millis >= 130 && millis <= 910){ //TCS light when alarm goes off
     stroke(warningorange);
     noFill();
     strokeWeight(2);
@@ -700,7 +740,19 @@ function draw_clock(obj) {
     drawtcs(tcsx2,tcsy2);
     drawtcs(tcsx2,tcsy2);
     pop();
-    }
+    };
 
-
+  if (alarm == 0 && millis >=500){ //indicators when alarm goes off
+    stroke(warninggreen);
+    noFill();
+    strokeWeight(2);
+    push();
+    drawingContext.shadowBlur = 20;
+    drawingContext.shadowColor = color(warninggreen);
+    drawindicate(indicatex2,indicatey2);
+    drawindicate(indicatex2,indicatey2);
+    drawindicate(indicatex2,indicatey2);
+    drawindicate(indicatex2,indicatey2);
+    pop();
+  };
 }
